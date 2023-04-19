@@ -2,7 +2,7 @@ const { Task } = require("../../models/task");
 const { BadRequest } = require("http-errors");
 
 const getAllNews = async (req, res) => {
-  const { lang = "ua", key = "", page = 1, limit = 12 } = req.query;
+  const { lang = "ua", key = "" } = req.query;
 
   const allowedLanguages = ["ua", "en"];
 
@@ -22,20 +22,17 @@ const getAllNews = async (req, res) => {
       { [`description.${lang}`]: { $regex: key, $options: "i" } },
     ];
   }
-  const skip = (page - 1) * limit;
 
-  const tasks = await Task.find(
-    newsFilter,
-    {
-      [`title.${lang}`]: 1,
-      [`description.${lang}`]: 1,
-      link: 1,
-      img: 1,
-      date: 1,
-      _id: 1,
-    },
-    { skip, limit: +limit }
-  );
+  const tasks = await Task.find(newsFilter, {
+    [`title.${lang}`]: 1,
+    img: 1,
+    statr: 1,
+    end: 1,
+    date: 1,
+    status: 1,
+    priority: 1,
+    _id: 1,
+  });
 
   res.json({
     message: "Successfully",
