@@ -1,0 +1,1035 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Petly",
+    "version": "1.0.1"
+  },
+  "servers": [
+    {
+      "url": "https://your-pets.onrender.com/",
+      "description": "Website for finding and selling pets"
+    }
+  ],
+  "paths": {
+    "/news": {
+      "get": {
+        "summary": "Get news method",
+        "tags": ["News"],
+        "operationId": "getAllNews",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "default": "Successfully"
+                    },
+                    "news": {
+                      "$ref": "#/components/schemas/News"
+                    },
+                    "total": {
+                      "type": "integer"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": ["message"],
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "default": "Choose another type of language. Available options: ua, en."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/ServerError" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/register": {
+      "post": {
+        "summary": "Register new user",
+        "tags": ["User"],
+        "operationId": "register",
+        "requestBody": {
+          "description": "Registration's object",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RegistrationRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "default": "Registration completed successfully"
+                    },
+                    "dataUser": {
+                      "$ref": "#/components/schemas/RegistrationResponse"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": ["message"],
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "default": "Some error message"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Conflict",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": ["message"],
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "default": "Email in use"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/ServerError" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/login": {
+      "post": {
+        "summary": "Login user",
+        "tags": ["User"],
+        "operationId": "login",
+        "requestBody": {
+          "description": "Login data object",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "default": "Login completed successfully"
+                    },
+                    "dataUser": {
+                      "$ref": "#/components/schemas/LoginResponse"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": ["message"],
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "default": "Some error message"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": ["message"],
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "default": "Email or password is wrong"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/ServerError" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/logout": {
+      "post": {
+        "summary": "Logout user",
+        "tags": ["User"],
+        "operationId": "logout",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "required": true,
+            "description": "The token issued to the current user",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No content",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": ["message"],
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "default": "Logout completed successfully"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": ["message"],
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "default": "Not authorized"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/NotFoundError" }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/ServerError" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/update": {
+      "patch": {
+        "summary": "Update user data",
+        "tags": ["User"],
+        "operationId": "update",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "required": true,
+            "description": "The token issued to the current user",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "User object that needs to be added to update",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "$ref": "#/components/schemas/User/properties/name"
+                  },
+                  "city": {
+                    "$ref": "#/components/schemas/User/properties/city"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": ["message", "user"],
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "default": "Update completed successfully"
+                    },
+                    "user": {
+                      "type": "object",
+                      "default": {
+                        "name": "Ivan Petrenko",
+                        "city": "Odesa"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": ["message"],
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "default": "Not authorized"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/NotFoundError" }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/ServerError" }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "News": {
+        "type": "object",
+        "required": ["title", "description", "date", "img", "link"],
+        "properties": {
+          "_id": {
+            "type": "string",
+            "example": "642fdf8745bc73b2aecbae7b",
+            "description": "Backend-generated unique identifier."
+          },
+          "title": {
+            "type": "object",
+            "required": ["en", "ua"],
+            "properties": {
+              "en": {
+                "type": "string",
+                "example": "The Rivne Zoo took half a thousand rescued bats for the winter"
+              },
+              "ua": {
+                "type": "string",
+                "example": "Рівненський зоопарк взяв на зимівлю півтисячі врятованих кажанів"
+              }
+            }
+          },
+          "description": {
+            "type": "object",
+            "required": ["en", "ua"],
+            "properties": {
+              "en": {
+                "type": "string",
+                "example": "More than half a thousand bats were brought to the Rivne Zoo for winter…"
+              },
+              "ua": {
+                "type": "string",
+                "example": "До Рівненського зоопарку на зимівлю привезли понад півтисячі кажанів…"
+              }
+            }
+          },
+          "date": {
+            "type": "string",
+            "example": "1681150875288"
+          },
+          "img": {
+            "type": "string",
+            "example": "https://lh3.googleusercontent.com/D1eQiyDJxmSpR-8z5TBgQWvFk_KidIpzQA6pLm_viQYwXyWcmYqwJsyMOGQUCkXRx5cz7TdzY46B3zgVlaemJ4bKNnHmbBx7gi0B8II"
+          },
+          "link": {
+            "type": "string",
+            "example": "https://zaxid.net/rivnenskiy_zoopark_vzyav_na_zimivlyu_pivtisyachi_vryatovanih_kazhaniv_n1558587"
+          }
+        }
+      },
+      "User": {
+        "type": "object",
+        "required": ["name", "email", "password", "city", "phone"],
+        "properties": {
+          "_id": {
+            "type": "string",
+            "example": "642fdf8745bc73b2aecbae7b",
+            "description": "Backend-generated unique identifier."
+          },
+          "name": {
+            "type": "string",
+            "example": "Ivan Petrenko",
+            "description": "User's name"
+          },
+          "email": {
+            "type": "string",
+            "example": "ivan_petrenko@mail.com",
+            "description": "User's email address"
+          },
+          "password": {
+            "type": "string",
+            "example": "ivan123456petrenko",
+            "description": "User's password. At least 6 characters"
+          },
+          "city": {
+            "type": "string",
+            "example": "Odesa",
+            "description": "User's city"
+          },
+          "phone": {
+            "type": "string",
+            "example": "066-555-44-33",
+            "description": "User's phone number"
+          },
+          "birthday": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2023-04-12T07:28:49.493Z",
+            "description": "User's day of birth"
+          },
+          "avatarURL": {
+            "type": "string",
+            "example": "https://s.gravatar.com/avatar/93e9084ab289b7f1f5e4ab6716a56c3b?s=100&r=x&d=retro",
+            "description": "Link to user's avatar"
+          },
+          "token": {
+            "type": "string",
+            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0MzA0Yzg0YmQxNjgwMzBkOTIyMDQ3YyIsImlhdCI6MTY4MDk0NTI5NSwiZXhwIjoxNjgxMDMxNjk1fQ.mqGKd15X-SXUafsR9tFw2BucuG9bmINW_rac35ETj4s",
+            "description": "User's personal token to access site resources. Created by backend after user's authorization"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2023-04-12T07:28:49.493Z",
+            "description": "Backend-generated date and time of creating user's data"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2023-04-12T07:28:49.493Z",
+            "description": "Backend-generated date and time of updating user's data"
+          }
+        }
+      },
+      "Service": {
+        "type": "object",
+        "required": ["name", "time", "address", "email", "phone"],
+        "properties": {
+          "_id": {
+            "type": "string",
+            "example": "642fdf8745bc73b2aecbae7b",
+            "description": "Backend-generated unique identifier."
+          },
+          "name": {
+            "type": "object",
+            "required": ["en", "ua"],
+            "properties": {
+              "en": {
+                "type": "string",
+                "example": "Whiskas",
+                "description": "Name of the service in English"
+              },
+              "ua": {
+                "type": "string",
+                "example": "????? Whiskas",
+                "description": "Name of the service in Ukrainian"
+              }
+            }
+          },
+          "time": {
+            "type": "object",
+            "properties": {
+              "en": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "MN": {
+                      "type": "string"
+                    },
+                    "TU": {
+                      "type": "string"
+                    },
+                    "WE": {
+                      "type": "string"
+                    },
+                    "TH": {
+                      "type": "string"
+                    },
+                    "FR": {
+                      "type": "string"
+                    },
+                    "SA": {
+                      "type": "string"
+                    },
+                    "SU": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "example": [
+                  { "MN": "08:00-19:00" },
+                  { "TU": "08:00-19:00" },
+                  { "WE": "08:00-19:00" },
+                  { "TH": "08:00-19:00" },
+                  { "FR": "08:00-19:00" },
+                  { "SA": "08:00-19:00" },
+                  { "SU": "08:00-19:00" }
+                ],
+                "description": "Store hours"
+              },
+              "ua": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "ПН": {
+                      "type": "string"
+                    },
+                    "ВТ": {
+                      "type": "string"
+                    },
+                    "СР": {
+                      "type": "string"
+                    },
+                    "ЧТ": {
+                      "type": "string"
+                    },
+                    "ПТ": {
+                      "type": "string"
+                    },
+                    "СБ": {
+                      "type": "string"
+                    },
+                    "НД": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "example": [
+                  { "ПН": "08:00-19:00" },
+                  { "ВТ": "08:00-19:00" },
+                  { "СР": "08:00-19:00" },
+                  { "ЧТ": "08:00-19:00" },
+                  { "ПТ": "08:00-19:00" },
+                  { "СБ": "08:00-19:00" },
+                  { "НД": "08:00-19:00" }
+                ],
+                "description": "Графік роботи"
+              }
+            }
+          },
+          "address": {
+            "type": "object",
+            "properties": {
+              "en": {
+                "type": "string",
+                "example": "Fedorivka, Kyiv Oblast",
+                "description": "Address of the service"
+              },
+              "ua": {
+                "type": "string",
+                "example": "Федорівка, Київська область",
+                "description": "Адреса"
+              }
+            }
+          },
+          "email": {
+            "type": "string",
+            "example": "whiskas@mail.com",
+            "description": "Email address of the service. Must be unique value"
+          },
+          "phone": {
+            "type": "string",
+            "example": "066-555-44-33",
+            "description": "Phone number of the service"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2023-04-12T07:28:49.493Z",
+            "description": "Backend-generated date and time of creating service data"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2023-04-12T07:28:49.493Z",
+            "description": "Backend-generated date and time of updating serviсe data"
+          }
+        }
+      },
+      "Notice": {
+        "type": "object",
+        "required": [
+          "category",
+          "title",
+          "name",
+          "birthdate",
+          "breed",
+          "sex",
+          "location",
+          "comments"
+        ],
+        "properties": {
+          "_id": {
+            "type": "string",
+            "example": "642fdf8745bc73b2aecbae7b",
+            "description": "Backend-generated unique identifier."
+          },
+          "category": {
+            "type": "string",
+            "enum": ["sell", "lost-found", "for-free"],
+            "default": "sell",
+            "description": "Notice categories"
+          },
+          "title": {
+            "type": "object",
+            "required": ["en", "ua"],
+            "properties": {
+              "en": {
+                "type": "string",
+                "minLength": 2,
+                "maxLength": 48,
+                "pattern": "a-zA-Z",
+                "description": "Notice title in English"
+              },
+              "ua": {
+                "type": "string",
+                "minLength": 2,
+                "maxLength": 48,
+                "pattern": "а-яА-Я",
+                "description": "Notice title in Ukrainian"
+              }
+            }
+          },
+          "name": {
+            "type": "string",
+            "minLength": 2,
+            "maxLength": 16,
+            "pattern": "a-zA-Zа-яА-Я",
+            "description": "Pet's name"
+          },
+          "birthdate": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2023-04-12T07:28:49.493Z",
+            "description": "Pet's day of birth"
+          },
+          "breed": {
+            "type": "object",
+            "required": ["en", "ua"],
+            "properties": {
+              "en": {
+                "type": "string",
+                "minLength": 2,
+                "maxLength": 24,
+                "pattern": "a-zA-Z",
+                "description": "Pet's breed in English"
+              },
+              "ua": {
+                "type": "string",
+                "minLength": 2,
+                "maxLength": 24,
+                "pattern": "а-яА-Я",
+                "description": "Pet's breed in Ukrainian"
+              }
+            }
+          },
+          "sex": {
+            "type": "string",
+            "enum": ["male", "female"],
+            "description": "Pet's sex"
+          },
+          "location": {
+            "type": "object",
+            "required": ["city", "region"],
+            "properties": {
+              "city": {
+                "type": "object",
+                "required": ["en", "ua"],
+                "properties": {
+                  "en": {
+                    "type": "string",
+                    "minLength": 2,
+                    "maxLength": 36,
+                    "pattern": "a-zA-Z",
+                    "description": "Pet's city in English"
+                  },
+                  "ua": {
+                    "type": "string",
+                    "minLength": 2,
+                    "maxLength": 36,
+                    "pattern": "а-яА-Я",
+                    "description": "Pet's city in Ukrainian"
+                  }
+                }
+              },
+              "region": {
+                "type": "object",
+                "required": ["en", "ua"],
+                "properties": {
+                  "en": {
+                    "type": "string",
+                    "minLength": 2,
+                    "maxLength": 48,
+                    "pattern": "a-zA-Z",
+                    "description": "Pet's region in English"
+                  },
+                  "ua": {
+                    "type": "string",
+                    "minLength": 2,
+                    "maxLength": 48,
+                    "pattern": "а-яА-Я",
+                    "description": "Pet's region in Ukrainian"
+                  }
+                }
+              }
+            }
+          },
+          "comments": {
+            "type": "object",
+            "required": ["en", "ua"],
+            "properties": {
+              "en": {
+                "type": "string",
+                "minLength": 8,
+                "maxLength": 120,
+                "description": "Notice comments in English"
+              },
+              "ua": {
+                "type": "string",
+                "minLength": 8,
+                "maxLength": 120,
+                "description": "Notice comments in Ukrainian"
+              }
+            }
+          },
+          "price": {
+            "type": "number",
+            "default": 0,
+            "description": "Pet's price"
+          },
+          "favorite": {
+            "type": "boolean",
+            "default": false,
+            "description": "Notice status"
+          },
+          "owner": {
+            "type": "string",
+            "example": "642fdf8745bc73b2aecbae7b",
+            "description": "Owner's unique identifier."
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2023-04-12T07:28:49.493Z",
+            "description": "Backend-generated date and time of notice creating"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2023-04-12T07:28:49.493Z",
+            "description": "Backend-generated date and time of notice updating"
+          }
+        }
+      },
+      "Pet": {
+        "type": "object",
+        "required": ["name", "birth", "breed"],
+        "properties": {
+          "_id": {
+            "type": "string",
+            "example": "642fdf8745bc73b2aecbae7b",
+            "description": "Backend-generated unique identifier."
+          },
+          "name": {
+            "type": "string",
+            "example": "Murzik",
+            "description": "Pet's name"
+          },
+          "birth": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2023-04-12T07:28:49.493Z",
+            "description": "Pet's day of birth"
+          },
+          "breed": {
+            "type": "string",
+            "example": "Persian cat",
+            "description": "Pet's breed"
+          },
+          "photo": {
+            "type": "string",
+            "example": "https://t3.gstatic.com/licensed-image?q=tbn:ANd9GcQ0suktJEBOYsgOoqYzT-aO4ZmHdxrxVkiyXSmiPmazPwoaHJQtL1sX-sXcPdMldK_m",
+            "description": "Pet image"
+          },
+          "comments": {
+            "type": "string",
+            "minLength": 8,
+            "maxLength": 120,
+            "example": "Vaccinated on time, twice a year.",
+            "description": "Pet card comments"
+          },
+          "owner": {
+            "type": "string",
+            "example": "642fdf8745bc73b2aecbae7b",
+            "description": "Owner's unique identifier."
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2023-04-12T07:28:49.493Z",
+            "description": "Backend-generated date and time of notice creating"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2023-04-12T07:28:49.493Z",
+            "description": "Backend-generated date and time of notice updating"
+          }
+        }
+      },
+      "RegistrationRequest": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "Ivan Petrenko",
+            "description": "User's name"
+          },
+          "email": {
+            "type": "string",
+            "example": "ivan_petrenko@mail.com",
+            "description": "User's email address"
+          },
+          "password": {
+            "type": "string",
+            "example": "ivan123456petrenko",
+            "description": "User's password. At least 6 characters"
+          },
+          "city": {
+            "type": "string",
+            "example": "Odesa",
+            "description": "User's city"
+          },
+          "phone": {
+            "type": "string",
+            "example": "066-555-44-33",
+            "description": "User's phone number"
+          }
+        }
+      },
+      "RegistrationResponse": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "Ivan Petrenko",
+            "description": "User's name"
+          },
+          "email": {
+            "type": "string",
+            "example": "ivan_petrenko@mail.com",
+            "description": "User's email address"
+          },
+          "birthday": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2023-04-12T07:28:49.493Z",
+            "description": "User's day of birth"
+          },
+          "phone": {
+            "type": "string",
+            "example": "066-555-44-33",
+            "description": "User's phone number"
+          },
+          "avatarURL": {
+            "type": "string",
+            "example": "https://s.gravatar.com/avatar/93e9084ab289b7f1f5e4ab6716a56c3b?s=100&r=x&d=retro",
+            "description": "Link to user's avatar"
+          },
+          "token": {
+            "type": "string",
+            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0MzA0Yzg0YmQxNjgwMzBkOTIyMDQ3YyIsImlhdCI6MTY4MDk0NTI5NSwiZXhwIjoxNjgxMDMxNjk1fQ.mqGKd15X-SXUafsR9tFw2BucuG9bmINW_rac35ETj4s",
+            "description": "User's personal token to access site resources. Created by backend after user's authorization"
+          }
+        }
+      },
+      "LoginRequest": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "example": "ivan_petrenko@mail.com",
+            "description": "User's email address"
+          },
+          "password": {
+            "type": "string",
+            "example": "ivan123456petrenko",
+            "description": "User's password. At least 6 characters"
+          }
+        }
+      },
+      "LoginResponse": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "Ivan Petrenko",
+            "description": "User's name"
+          },
+          "email": {
+            "type": "string",
+            "example": "ivan_petrenko@mail.com",
+            "description": "User's email address"
+          },
+          "birthday": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2023-04-12T07:28:49.493Z",
+            "description": "User's day of birth"
+          },
+          "phone": {
+            "type": "string",
+            "example": "066-555-44-33",
+            "description": "User's phone number"
+          },
+          "avatarURL": {
+            "type": "string",
+            "example": "https://s.gravatar.com/avatar/93e9084ab289b7f1f5e4ab6716a56c3b?s=100&r=x&d=retro",
+            "description": "Link to user's avatar"
+          },
+          "token": {
+            "type": "string",
+            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0MzA0Yzg0YmQxNjgwMzBkOTIyMDQ3YyIsImlhdCI6MTY4MDk0NTI5NSwiZXhwIjoxNjgxMDMxNjk1fQ.mqGKd15X-SXUafsR9tFw2BucuG9bmINW_rac35ETj4s",
+            "description": "User's personal token to access site resources. Created by backend after user's authorization"
+          }
+        }
+      },
+      "ServerError": {
+        "description": "Internal Server Error",
+        "type": "object",
+        "required": ["message"],
+        "properties": {
+          "message": {
+            "type": "string",
+            "default": "Server Error"
+          }
+        }
+      },
+      "NotFoundError": {
+        "description": "Not Found",
+        "type": "object",
+        "required": ["message"],
+        "properties": {
+          "message": {
+            "type": "string",
+            "default": "Not found"
+          }
+        }
+      }
+    }
+  }
+}

@@ -2,8 +2,8 @@ const express = require("express");
 const router = express.Router();
 
 const { ctrlWrapper } = require("../../middlewares");
-const { services: ctrl } = require("../../controllers");
+const { tasks: ctrl } = require("../../controllers");
 
-router.post("/", ctrlWrapper(ctrl.getAllServices));
+router.get("/", ctrlWrapper(ctrl.getAllTasks));
 
 module.exports = router;
