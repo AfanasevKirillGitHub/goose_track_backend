@@ -11,9 +11,7 @@ const googleAuth = async (req, res) => {
   const token = createToken(payload);
   await User.findByIdAndUpdate(id, { token });
 
-  res.redirect(
-    `https://afanasevkirillgithub.github.io/petly_frontend/login?token=${token}`
-  );
+  res.redirect(`https://goose-track-inteam.netlify.app/login?token=${token}`);
 };
 
 module.exports = googleAuth;
