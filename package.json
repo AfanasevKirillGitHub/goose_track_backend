@@ -1,5 +1,5 @@
 {
-  "name": "goose_track_backend",
+  "name": "backend-start",
   "version": "1.0.0",
   "scripts": {
     "start": "cross-env NODE_ENV=production node ./server.js",
