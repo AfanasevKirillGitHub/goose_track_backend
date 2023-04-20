@@ -25,8 +25,7 @@ const getAllNews = async (req, res) => {
 
   const tasks = await Task.find(newsFilter, {
     [`title.${lang}`]: 1,
-    img: 1,
-    statr: 1,
+    start: 1,
     end: 1,
     date: 1,
     status: 1,

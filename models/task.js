@@ -22,7 +22,7 @@ const tasksSchema = new Schema(
       },
     },
 
-    statr: {
+    start: {
       type: String,
       required: true,
       description: "Tasks statr",
