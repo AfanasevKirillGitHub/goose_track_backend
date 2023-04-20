@@ -4,8 +4,11 @@ const { User } = require("../models/user");
 const bcrypt = require("bcryptjs");
 const uuid = require("uuid");
 
-const { GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET, GOOGLE_CALLBACK_URL } =
-  process.env;
+const {
+  GOOGLE_CLIENT_ID = "",
+  GOOGLE_CLIENT_SECRET = "",
+  GOOGLE_CALLBACK_URL = "",
+} = process.env;
 
 const googleParam = {
   clientID: GOOGLE_CLIENT_ID,
