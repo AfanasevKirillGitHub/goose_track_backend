@@ -1,7 +1,7 @@
 const register = require("./register");
 const login = require("./login");
 const logout = require("./logout");
-const update = require("./update");
+const updateUserInfo = require("./updateUserInfo");
 const refreshToken = require("./refreshToken");
 const getUserInfo = require("./getUserInfo");
 const googleAuth = require("./googleAuth");
@@ -12,7 +12,7 @@ module.exports = {
   register,
   login,
   logout,
-  update,
+  updateUserInfo,
   refreshToken,
   getUserInfo,
   loginWithToken,

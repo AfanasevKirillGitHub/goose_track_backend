@@ -2,10 +2,10 @@ const express = require("express");
 const router = express.Router();
 
 const { schemas } = require("../../models/user");
-const { auth, validation, ctrlWrapper } = require("../../middlewares");
+const { auth, ctrlWrapper, validation } = require("../../middlewares");
 const { users: ctrl } = require("../../controllers");
 
-router.patch("/info", auth, ctrlWrapper(ctrl.update));
+router.patch("/info", auth, validation(schemas.updateInfoSchema), ctrlWrapper(ctrl.updateUserInfo));
 
 router.post("/jwtrefresh", auth, ctrlWrapper(ctrl.refreshToken));
 
