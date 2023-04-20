@@ -71,12 +71,24 @@ const loginWhithTokenSchema = Joi.object({
   token: Joi.string().required(),
 });
 
+const updateInfoSchema = Joi.object({
+  name: Joi.string().min(2).max(16),
+  birthday: Joi.date(),
+  email: Joi.string(),
+  phone: Joi.string(),
+  skype: Joi.string(),
+  avatarURL: Joi.string(),
+});
+
+// updateInfoSchema.validate(data);
+
 const User = model("user", userSchema);
 
 const schemas = {
   registerSchema,
   loginSchema,
   loginWhithTokenSchema,
+  updateInfoSchema,
 };
 
 module.exports = { schemas, User };
