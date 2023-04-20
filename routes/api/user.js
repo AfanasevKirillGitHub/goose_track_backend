@@ -5,7 +5,7 @@ const { schemas } = require("../../models/user");
 const { auth, validation, ctrlWrapper } = require("../../middlewares");
 const { users: ctrl } = require("../../controllers");
 
-router.patch("/update", auth, ctrlWrapper(ctrl.update));
+router.patch("/info", auth, ctrlWrapper(ctrl.update));
 
 router.post("/jwtrefresh", auth, ctrlWrapper(ctrl.refreshToken));
 
