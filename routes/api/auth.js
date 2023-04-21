@@ -35,7 +35,7 @@ router.post("/login", validation(schemas.loginSchema), ctrlWrapper(ctrl.login));
 
 router.post(
   "/login/with-token",
-  validation(schemas.loginWhithTokenSchema),
+  validation(schemas.loginWithTokenSchema),
   ctrlWrapper(ctrl.loginWithToken)
 );
 
