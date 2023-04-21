@@ -2,8 +2,8 @@ const { Schema, model } = require("mongoose");
 const Joi = require("joi");
 const { validationError } = require("../helpers");
 
-const PRIORITY = ["todo", "inprogress", "done"];
-const STATUS = ["low", "medium", "high"];
+const STATUS = ["todo", "inprogress", "done"];
+const PRIORITY = ["low", "medium", "high"];
 
 const tasksSchema = new Schema(
   {
