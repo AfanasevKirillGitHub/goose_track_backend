@@ -9,7 +9,7 @@ const register = async (req, res) => {
     throw new Conflict("Email in use");
   }
 
-  const newUser = new User({ name, email, avatarURL: null, phone: null, skype: null, birthday: new Date(), });
+  const newUser = new User({ name, email, avatarURL: null, phone: null, skype: null, birthday: null, });
   await newUser.setPassword(password);
 
   const payload = {
