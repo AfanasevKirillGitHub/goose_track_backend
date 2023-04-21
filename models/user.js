@@ -31,7 +31,7 @@ const userSchema = Schema(
       type: Date,
       min: "1977-09-28",
       max: "2015-05-23",
-      default: new Date(),
+      default: null,
     },
     avatarURL: {
       type: String,
