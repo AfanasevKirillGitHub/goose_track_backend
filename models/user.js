@@ -31,7 +31,7 @@ const userSchema = Schema(
       type: Date,
       min: "1977-09-28",
       max: "2015-05-23",
-      default: null,
+      default: new Date(),
     },
     avatarURL: {
       type: String,
@@ -58,7 +58,7 @@ userSchema.post("findOneAndUpdate", validationError);
 
 const registerSchema = Joi.object({
   name: Joi.string().required(),
-  email: Joi.string().required(),
+  email: Joi.string().email().required(),
   password: Joi.string().min(6).required(),
 });
 
@@ -67,7 +67,7 @@ const loginSchema = Joi.object({
   password: Joi.string().min(6).required(),
 });
 
-const loginWhithTokenSchema = Joi.object({
+const loginWithTokenSchema = Joi.object({
   token: Joi.string().required(),
 });
 
@@ -87,7 +87,7 @@ const User = model("user", userSchema);
 const schemas = {
   registerSchema,
   loginSchema,
-  loginWhithTokenSchema,
+  loginWithTokenSchema,
   updateInfoSchema,
 };
 

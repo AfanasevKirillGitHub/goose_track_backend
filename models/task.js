@@ -18,19 +18,19 @@ const tasksSchema = new Schema(
         type: String,
         required: true,
         unique: true,
-        description: "Tasks title in Ukr",
+        description: "Tasks title in Ukrainian",
       },
     },
 
     start: {
       type: String,
       required: true,
-      description: "Tasks statr",
+      description: "Tasks start",
     },
     end: {
       type: String,
       required: true,
-      description: "Tasks statr",
+      description: "Tasks start",
     },
 
     date: {
@@ -60,7 +60,7 @@ const Task = model("task", tasksSchema);
 
 const addTaskSchema = Joi.object({
   title: Joi.string().required(),
-  statr: Joi.string().required(),
+  start: Joi.string().required(),
   end: Joi.string().required(),
   date: Joi.string().required(),
   status: Joi.string()

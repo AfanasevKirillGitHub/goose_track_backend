@@ -21,7 +21,7 @@ app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 app.use("/api/auth", authRouter);
 app.use("/api/user", userRouter);
-app.use("/api/task", taskRouter);
+app.use("/api/tasks", taskRouter);
 
 app.use((_, res) => {
   res.status(404).json({ message: "Not found" });

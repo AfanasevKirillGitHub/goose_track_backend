@@ -1,14 +1,14 @@
 const { Task } = require("../../models/task");
 const { BadRequest } = require("http-errors");
 
-const getAllNews = async (req, res) => {
+const getAllTasks = async (req, res) => {
   const { lang = "ua", key = "" } = req.query;
 
   const allowedLanguages = ["ua", "en"];
 
   if (!allowedLanguages.includes(lang)) {
     throw BadRequest(
-      "Choose another type of language. Availablel options: ua, en."
+      "Choose another type of language. Available options: ua, en."
     );
   }
 
@@ -40,4 +40,4 @@ const getAllNews = async (req, res) => {
   });
 };
 
-module.exports = getAllNews;
+module.exports = getAllTasks;
