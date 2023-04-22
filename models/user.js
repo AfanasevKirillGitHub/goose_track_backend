@@ -80,8 +80,6 @@ const updateInfoSchema = Joi.object({
   avatarURL: Joi.string(),
 });
 
-// updateInfoSchema.validate(data);
-
 const User = model("user", userSchema);
 
 const schemas = {
