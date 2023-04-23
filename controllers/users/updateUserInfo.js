@@ -1,12 +1,24 @@
 const { User } = require("../../models/user");
+const { BadRequest, NotFound } = require("http-errors");
+const { cloudinaryImgUpload } = require("../../helpers");
 
 const updateUserInfo = async (req, res) => {
-  const { _id } = req.user;
-  const { body } = req;
+  const { body, file, user } = req;
+
+  if (Object.keys(body).length === 0 && !file) {
+    throw new BadRequest("No updating data!");
+  }
+
+  if (file) {
+    const { avatarURL } = await cloudinaryImgUpload(req);
+    body.avatarURL = avatarURL;
+  }
 
   const updatedUser = await User.findByIdAndUpdate(
-    _id,
-    { $set: body },
+    user._id,
+    {
+      $set: body,
+    },
     { new: true, runValidators: true }
   );
 
@@ -18,6 +30,8 @@ const updateUserInfo = async (req, res) => {
       },
     });
   }
+
+  throw new NotFound("Not found");
 };
 
 module.exports = updateUserInfo;

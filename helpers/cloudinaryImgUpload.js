@@ -1,6 +1,6 @@
-const cloudinary = require('cloudinary').v2;
-const dotenv = require('dotenv');
-const fs = require('fs/promises');
+const cloudinary = require("cloudinary").v2;
+const dotenv = require("dotenv");
+const fs = require("fs/promises");
 
 // додати в файл - .env
 // const { CLOUD_NAME, API_KEY, API_SECRET } = process.env;
@@ -21,16 +21,16 @@ cloudinary.config({
 const cloudinaryImgUpload = async (req) => {
   if (req.file) {
     const { path: tempUpload } = req.file;
-          
+
     try {
       const { secure_url: avatarURL, public_id: idCloudAvatar } =
         await cloudinary.uploader.upload(tempUpload, {
-          folder: 'images',
+          folder: "images",
           transformation: {
-            with: 288,
+            width: 288,
             height: 288,
-            gravity: 'auto',
-            crop: 'fill',
+            gravity: "auto",
+            crop: "fill",
           },
         });
 
