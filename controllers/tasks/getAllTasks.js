@@ -2,7 +2,8 @@ const { Task } = require("../../models/task");
 const { BadRequest } = require("http-errors");
 
 const getAllTasks = async (req, res) => {
-  const { lang = "ua", key = "" } = req.query;
+  const { _id } = req.user;
+  const { lang = "ua" } = req.query;
 
   const allowedLanguages = ["ua", "en"];
 
@@ -14,14 +15,8 @@ const getAllTasks = async (req, res) => {
 
   const newsFilter = {
     [`title.${lang}`]: { $exists: true },
+    owner: _id,
   };
-
-  if (key) {
-    newsFilter.$or = [
-      { [`title.${lang}`]: { $regex: key, $options: "i" } },
-      { [`description.${lang}`]: { $regex: key, $options: "i" } },
-    ];
-  }
 
   const tasks = await Task.find(newsFilter, {
     [`title.${lang}`]: 1,
@@ -31,7 +26,7 @@ const getAllTasks = async (req, res) => {
     status: 1,
     priority: 1,
     _id: 1,
-  });
+  }).populate("owner", "_id name email");
 
   res.json({
     message: "Successfully",
