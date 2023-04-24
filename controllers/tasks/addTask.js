@@ -6,6 +6,8 @@ const addTask = async (req, res) => {
 
   const task = await Task.create({ ...taskData, owner: _id });
 
+  console.log("taskData :>> ", taskData);
+
   res.status(200).json({
     message: "Successfully",
     taskData: task,
