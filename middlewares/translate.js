@@ -1,7 +1,10 @@
 const { translateBody } = require("../helpers");
 
 const translate = async (req, res, next) => {
-  const { lang = "en" } = req.query;
+  console.log("translate req.body :>> ", req.body);
+  const { lang = "en" } = req.body;
+
+  console.log("translate lang :>> ", lang);
 
   const allowedLanguages = ["ua", "en"];
   const stringifiedAllowedLanguages = allowedLanguages.join(", ");
