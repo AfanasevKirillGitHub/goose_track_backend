@@ -11,13 +11,11 @@ const tasksSchema = new Schema(
       en: {
         type: String,
         required: true,
-        unique: true,
         description: "Tasks title in English",
       },
       ua: {
         type: String,
         required: true,
-        unique: true,
         description: "Tasks title in Ukrainian",
       },
     },
