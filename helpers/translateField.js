@@ -18,7 +18,7 @@ const translateField = async ({
   });
 
   const { translatedText } = await result.json();
-  return translatedText;
+  return await translatedText;
 };
 
 module.exports = translateField;

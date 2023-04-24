@@ -29,7 +29,7 @@ const translateBody = async (sourceLang, targetLang, body) => {
     }
   }, {});
 
-  return newBody;
+  return await newBody;
 };
 
 module.exports = translateBody;
