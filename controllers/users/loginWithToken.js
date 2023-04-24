@@ -18,6 +18,7 @@ const loginWithToken = async (req, res) => {
       birthday: user.birthday,
       phone: user.phone,
       avatarURL: user.avatarURL,
+      skype: user.skype,
       token: userToken,
     },
   });
