@@ -8,7 +8,7 @@ const addTask = async (req, res) => {
 
   console.log("task :>> ", task);
 
-  res.status(200).json({
+  res.status(201).json({
     message: "Successfully",
     taskData: task,
   });
