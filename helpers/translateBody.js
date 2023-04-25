@@ -2,14 +2,14 @@ const translateField = require("./translateField");
 
 // Функція перекладу БОДІ
 const translateBody = async (sourceLang, targetLang, body) => {
-  const newBody = await Object.keys(body).reduce(async (acc, lang) => {
+  const newBody = await Object.keys(body).reduce(async (acc, key) => {
     // База рекурсії
-    if (typeof body[lang] !== "object") {
-      if (lang === sourceLang) {
+    if (typeof body[key] !== "object") {
+      if (key === sourceLang) {
         // нормалізуємо таргетну мову для бази щоб в базі було UA
         const normalizedTargetLang = targetLang === "ua" ? "uk" : "en";
         // нормалізуємо ключ вхідної мови для функції перекладу на UK
-        const normalizedFromLangKey = lang === "ua" ? "uk" : "en";
+        const normalizedFromLangKey = key === "ua" ? "uk" : "en";
 
         body[targetLang] = await translateField({
           text: await body[sourceLang],
@@ -19,12 +19,12 @@ const translateBody = async (sourceLang, targetLang, body) => {
         return await body;
       }
 
-      return { ...(await acc), [lang]: await body[lang] };
+      return { ...(await acc), [key]: await body[key] };
     } else {
       // Наступний крок рекурсії
       return {
         ...(await acc),
-        [lang]: await translateBody(sourceLang, targetLang, await body[lang]),
+        [key]: await translateBody(sourceLang, targetLang, await body[key]),
       };
     }
   }, {});
