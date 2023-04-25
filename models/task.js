@@ -7,19 +7,23 @@ const PRIORITY = ["low", "medium", "high"];
 
 const tasksSchema = new Schema(
   {
+    // title: {
+    //   en: {
+    //     type: String,
+    //     required: true,
+    //     description: "Tasks title in English",
+    //   },
+    //   ua: {
+    //     type: String,
+    //     required: true,
+    //     description: "Tasks title in Ukrainian",
+    //   },
+    // },
+
     title: {
-      en: {
-        type: String,
-        required: true,
-        unique: true,
-        description: "Tasks title in English",
-      },
-      ua: {
-        type: String,
-        required: true,
-        unique: true,
-        description: "Tasks title in Ukrainian",
-      },
+      type: String,
+      required: true,
+      description: "Tasks title in English",
     },
 
     start: {

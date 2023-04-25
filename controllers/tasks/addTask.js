@@ -2,7 +2,11 @@ const { Task } = require("../../models/task");
 
 const addTask = async (req, res) => {
   const { _id } = req.user;
-  const task = await Task.create({ ...req.body, owner: _id });
+  const { data: taskData } = req.body;
+
+  const task = await Task.create({ ...taskData, owner: _id });
+
+  console.log("task :>> ", task);
 
   res.status(200).json({
     message: "Successfully",

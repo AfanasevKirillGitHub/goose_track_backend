@@ -2,7 +2,7 @@ const translateField = require("./translateField");
 
 // Функція перекладу БОДІ
 const translateBody = async (sourceLang, targetLang, body) => {
-  const newBody = Object.keys(body).reduce(async (acc, key) => {
+  const newBody = await Object.keys(body).reduce(async (acc, key) => {
     // База рекурсії
     if (typeof body[key] !== "object") {
       if (key === sourceLang) {
@@ -12,24 +12,24 @@ const translateBody = async (sourceLang, targetLang, body) => {
         const normalizedFromLangKey = key === "ua" ? "uk" : "en";
 
         body[targetLang] = await translateField({
-          text: body[sourceLang],
+          text: await body[sourceLang],
           from: normalizedFromLangKey,
           to: normalizedTargetLang,
         });
         return await body;
       }
 
-      return { ...(await acc), [key]: body[key] };
+      return { ...(await acc), [key]: await body[key] };
     } else {
       // Наступний крок рекурсії
       return {
         ...(await acc),
-        [key]: await translateBody(sourceLang, targetLang, body[key]),
+        [key]: await translateBody(sourceLang, targetLang, await body[key]),
       };
     }
   }, {});
 
-  return newBody;
+  return await newBody;
 };
 
 module.exports = translateBody;

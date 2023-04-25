@@ -1,7 +1,8 @@
 const { translateBody } = require("../helpers");
 
 const translate = async (req, res, next) => {
-  const { lang = "en" } = req.query;
+  const { lang = "en" } = req.body;
+  const { data: taskData } = req.body;
 
   const allowedLanguages = ["ua", "en"];
   const stringifiedAllowedLanguages = allowedLanguages.join(", ");
@@ -20,7 +21,7 @@ const translate = async (req, res, next) => {
   // приймає sourceLang, targetLang, body
   // результат об'єкт з доданими полями з перекладом
 
-  res.body = await translateBody(lang, targetLang, req.body);
+  res.body = await translateBody(lang, targetLang, taskData);
 
   next();
 };
