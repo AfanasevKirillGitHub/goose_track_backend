@@ -8,6 +8,7 @@ require("dotenv").config();
 const authRouter = require("./routes/api/auth");
 const userRouter = require("./routes/api/user");
 const taskRouter = require("./routes/api/task");
+const reviewsRouter = require("./routes/api/reviews");
 
 const app = express();
 const formatsLogger = app.get("env") === "development" ? "dev" : "short";
@@ -22,6 +23,7 @@ app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.use("/api/auth", authRouter);
 app.use("/api/user", userRouter);
 app.use("/api/tasks", taskRouter);
+app.use("/api/reviews", reviewsRouter)
 
 app.use((_, res) => {
   res.status(404).json({ message: "Not found" });

@@ -1,20 +1,10 @@
 const { Task } = require("../../models/task");
-const { BadRequest } = require("http-errors");
+
 
 const getAllTasks = async (req, res) => {
   const { _id } = req.user;
-  const { lang = "ua" } = req.query;
-
-  const allowedLanguages = ["ua", "en"];
-
-  if (!allowedLanguages.includes(lang)) {
-    throw BadRequest(
-      "Choose another type of language. Available options: ua, en."
-    );
-  }
 
   const newsFilter = {
-    title: { $exists: true },
     owner: _id,
   };
 
