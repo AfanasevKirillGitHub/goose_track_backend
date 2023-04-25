@@ -46,11 +46,13 @@ const tasksSchema = new Schema(
       type: String,
       enum: STATUS,
       required: true,
+      default: STATUS[0],
     },
     priority: {
       type: String,
       enum: PRIORITY,
       required: true,
+      default: PRIORITY[0],
     },
     owner: {
       type: Schema.Types.ObjectId,
