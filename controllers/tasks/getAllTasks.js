@@ -28,7 +28,7 @@ const getAllTasks = async (req, res) => {
     _id: 1,
   }).populate("owner", "_id name email");
 
-  res.json({
+  res.status(200).json({
     message: "Successfully",
     tasks,
     total: tasks.length,

@@ -24,8 +24,8 @@ const updateUserInfo = async (req, res) => {
 
   if (updatedUser) {
     return res.status(200).json({
-      message: "Update completed successfully",
-      user: {
+      message: "Updated successfully",
+      updatedData: {
         ...body,
       },
     });
