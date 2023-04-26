@@ -12,6 +12,8 @@ const updateUserInfo = async (req, res) => {
   if (file) {
     const { avatarURL } = await cloudinaryImgUpload(req);
     body.avatarURL = avatarURL;
+  } else {
+    body.avatarURL = body.avatar;
   }
 
   const updatedUser = await User.findByIdAndUpdate(
