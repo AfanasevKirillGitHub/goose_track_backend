@@ -74,11 +74,12 @@ const loginWithTokenSchema = Joi.object({
 
 const updateInfoSchema = Joi.object({
   name: Joi.string().min(2).max(16),
-  birthday: Joi.date(),
+  birthday: Joi.date().allow("", null),
   email: Joi.string(),
-  phone: Joi.string(),
-  skype: Joi.string(),
-  avatarURL: Joi.string(),
+  phone: Joi.string().allow("", null),
+  skype: Joi.string().allow("", null),
+  avatar: Joi.string().allow("", null),
+  avatarURL: Joi.string().allow("", null),
   // avatarURL: Joi.object({
   //   type: Joi.string().valid(...FILE_TYPES),
   // }).unknown(),
