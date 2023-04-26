@@ -80,11 +80,9 @@ const updateInfoSchema = Joi.object({
   phone: Joi.string(),
   skype: Joi.string(),
   avatarURL: Joi.object({
-    type: {
-      type: String,
-      enum: String.values(FILE_TYPES),
-      required: true,
-    },
+    type: Joi.string()
+      .valid(...FILE_TYPES)
+      .required(),
   }).unknown(),
 });
 
