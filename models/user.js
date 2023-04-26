@@ -3,6 +3,8 @@ const Joi = require("joi");
 const bcrypt = require("bcryptjs");
 const { validationError } = require("../helpers");
 
+const FILE_TYPES = ["image/png", "image/jpeg", "image/jpg", "image/webp"];
+
 const userSchema = Schema(
   {
     name: {
@@ -21,11 +23,11 @@ const userSchema = Schema(
     },
     skype: {
       type: String,
-      default: '',
+      default: "",
     },
     phone: {
       type: String,
-      default: '',
+      default: "",
     },
     birthday: {
       type: Date,
@@ -35,11 +37,11 @@ const userSchema = Schema(
     },
     avatarURL: {
       type: String,
-      default: '',
+      default: "",
     },
     token: {
       type: String,
-      default: '',
+      default: "",
     },
   },
   { versionKey: false, timestamps: true }
@@ -77,7 +79,13 @@ const updateInfoSchema = Joi.object({
   email: Joi.string(),
   phone: Joi.string(),
   skype: Joi.string(),
-  avatarURL: Joi.string(),
+  avatarURL: Joi.object({
+    type: {
+      type: String,
+      enum: String.values(FILE_TYPES),
+      required: true,
+    },
+  }).unknown(),
 });
 
 const User = model("user", userSchema);
