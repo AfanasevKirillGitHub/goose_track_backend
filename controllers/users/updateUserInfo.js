@@ -5,8 +5,6 @@ const { cloudinaryImgUpload } = require("../../helpers");
 const updateUserInfo = async (req, res) => {
   const { body, file, user } = req;
 
-  console.log(user);
-
   if (Object.keys(body).length === 0 && !file) {
     throw new BadRequest("No updating data!");
   }
