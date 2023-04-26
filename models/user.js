@@ -31,8 +31,7 @@ const userSchema = Schema(
     },
     birthday: {
       type: Date,
-      min: "1977-09-28",
-      max: "2015-05-23",
+      min: "1920-01-01",
       default: null,
     },
     avatarURL: {
@@ -79,7 +78,7 @@ const updateInfoSchema = Joi.object({
   email: Joi.string(),
   phone: Joi.string(),
   skype: Joi.string(),
-  avatarURL: Joi.any(),
+  avatarURL: Joi.string(),
   // avatarURL: Joi.object({
   //   type: Joi.string().valid(...FILE_TYPES),
   // }).unknown(),
