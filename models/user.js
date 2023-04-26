@@ -79,9 +79,10 @@ const updateInfoSchema = Joi.object({
   email: Joi.string(),
   phone: Joi.string(),
   skype: Joi.string(),
-  avatarURL: Joi.object({
-    type: Joi.string().valid(...FILE_TYPES),
-  }).unknown(),
+  avatarURL: Joi.any(),
+  // avatarURL: Joi.object({
+  //   type: Joi.string().valid(...FILE_TYPES),
+  // }).unknown(),
 });
 
 const User = model("user", userSchema);
