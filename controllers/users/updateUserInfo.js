@@ -25,8 +25,14 @@ const updateUserInfo = async (req, res) => {
   if (updatedUser) {
     return res.status(200).json({
       message: "Updated successfully",
-      updatedData: {
-        ...body,
+      dataUser: {
+        name: user.name,
+        email: user.email,
+        birthday: user.birthday,
+        phone: user.phone,
+        skype: user.skype,
+        avatarURL: user.avatarURL,
+        token: user.token,
       },
     });
   }
