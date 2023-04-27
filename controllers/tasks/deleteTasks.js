@@ -6,7 +6,7 @@ const deleteTasks = async (req, res) => {
   const { _id } = req.user;
 
   const taskToDelete = await Task.findOneAndDelete({
-    date: id,
+    _id: id,
     owner: _id,
   });
 

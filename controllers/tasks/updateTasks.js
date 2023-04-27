@@ -5,14 +5,10 @@ const updateTasks = async (req, res) => {
   const { id } = req.params;
   const { _id } = req.user;
   const { body } = req;
-  const task = await Task.findOneAndUpdate(
-    { date: id, owner: _id },
-    body.data,
-    {
-      new: true,
-      runValidators: true,
-    }
-  );
+  const task = await Task.findOneAndUpdate({ _id: id, owner: _id }, body.data, {
+    new: true,
+    runValidators: true,
+  });
   if (!task) {
     throw NotFound("Task not found");
   }
