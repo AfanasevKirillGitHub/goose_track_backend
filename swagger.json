@@ -1039,6 +1039,152 @@
           }
         }
       }
+    },
+    "/reviews": {
+      "get": {
+        "summary": "Get reviews collection",
+        "tags": ["Review"],
+        "operationId": "getAllReviews",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "default": "Successfully"
+                    },
+                    "reviews": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Review"
+                      }
+                    },
+                    "total": {
+                      "type": "integer"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/ServerError" }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Create new review",
+        "tags": ["Review"],
+        "operationId": "addReview",
+        "requestBody": {
+          "description": "The new review object",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "stars": {
+                    "$ref": "#/components/schemas/Review/properties/stars"
+                  },
+                  "reviewText": {
+                    "$ref": "#/components/schemas/Review/properties/reviewText"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "required": true,
+            "description": "The token issued to the current user",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "default": "Successfully"
+                    },
+                    "reviewData": {
+                      "type": "object",
+                      "properties": {
+                        "stars": {
+                          "$ref": "#/components/schemas/Review/properties/stars"
+                        },
+                        "reviewText": {
+                          "$ref": "#/components/schemas/Review/properties/reviewText"
+                        },
+                        "name": {
+                          "$ref": "#/components/schemas/Review/properties/name"
+                        },
+                        "imgUrl": {
+                          "$ref": "#/components/schemas/Review/properties/imgUrl"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": ["message"],
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "default": "Not authorized"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": ["message"],
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "default": "Server Error"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
@@ -1177,6 +1323,51 @@
             "type": "string",
             "example": "642fdf8745bc73b2aecbae7b",
             "description": "Owner's unique identifier."
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2023-04-12T07:28:49.493Z",
+            "description": "Backend-generated date and time of task creating"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2023-04-12T07:28:49.493Z",
+            "description": "Backend-generated date and time of task updating"
+          }
+        }
+      },
+      "Review": {
+        "type": "object",
+        "required": ["stars", "reviewText", "name", "imgUrl"],
+        "properties": {
+          "_id": {
+            "type": "string",
+            "example": "642fdf8745bc73b2aecbae7b",
+            "description": "Backend-generated unique identifier."
+          },
+          "stars": {
+            "type": "number",
+            "description": "Number of stars",
+            "minimum": 1,
+            "maximum": 5,
+            "example": 4
+          },
+          "name": {
+            "type": "string",
+            "description": "Reviewer's name",
+            "example": "Yehor"
+          },
+          "reviewText": {
+            "type": "string",
+            "description": "Review text",
+            "example": "Very nice useful and convenient app. Thanks!"
+          },
+          "imgUrl": {
+            "type": "string",
+            "description": "Reviewer's image",
+            "example": "https://s.gravatar.com/avatar/93e9084ab289b7f1f5e4ab6716a56c3b?s=100&r=x&d=retro"
           },
           "createdAt": {
             "type": "string",
