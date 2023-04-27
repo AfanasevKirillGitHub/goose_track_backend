@@ -5,7 +5,7 @@ const updateTasks = async (req, res) => {
   const { id } = req.params;
   const { _id } = req.user;
   const { body } = req;
-  const task = await Task.findOneAndUpdate({ _id: id, owner: _id }, body.data, {
+  const task = await Task.findOneAndUpdate({ _id: id, owner: _id }, body, {
     new: true,
     runValidators: true,
   });
