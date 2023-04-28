@@ -25,7 +25,7 @@ const reviewsSchema = new Schema(
       },
       imgUrl: {
         type: String,
-        required: true,
+        // required: true,
         default: "",
         description: "Name",      
       },
