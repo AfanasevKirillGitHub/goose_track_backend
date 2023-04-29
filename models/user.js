@@ -23,11 +23,11 @@ const userSchema = Schema(
     },
     skype: {
       type: String,
-      default: "",
+      default: null,
     },
     phone: {
       type: String,
-      default: "",
+      default: null,
     },
     birthday: {
       type: Date,
@@ -36,7 +36,7 @@ const userSchema = Schema(
     },
     avatarURL: {
       type: String,
-      default: "",
+      default: null,
     },
     token: {
       type: String,
